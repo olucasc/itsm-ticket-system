@@ -63,6 +63,12 @@ npm start
 
 
 ## 🔄 Roadmap
+### Fase 1: TypeScript e Validação ✅
+- [x] Migração de JavaScript para TypeScript
+- [x] Implementação de tipos seguros (interfaces e types)
+- [x] Validação robusta com Zod
+- [x] 4 rotas CRUD completas
+
 ### Fase 2: Persistência e Segurança
 - [ ] SQLite (persistência em arquivo)
 - [ ] Autenticação JWT
