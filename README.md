@@ -1,27 +1,30 @@
 # ITSM Ticket System
 
-Sistema de gerenciamento de tickets (ITSM) desenvolvido em **TypeScript**, com validação robusta de dados e type safety.
+Sistema de gerenciamento de tickets (ITSM) desenvolvido em **TypeScript**, com validação robusta de dados, type safety e persistência em banco de dados.
 
-Inspirado em plataformas como ServiceNow, esta API REST oferece operações CRUD completas com validação em tempo real e melhor manutenibilidade através de tipos seguros.
+Inspirado em plataformas como ServiceNow, esta API REST oferece operações CRUD completas com validação em tempo real, armazenamento persistente e melhor manutenibilidade através de tipos seguros.
 
-## 🚀 Tecnologias
+## Tecnologias
 
 - **Runtime**: Node.js
-- **Linguagem**: TypeScript (migração de JavaScript)
+- **Linguagem**: TypeScript
 - **Framework**: Express.js
 - **Validação**: Zod (type-safe data validation)
+- **Database**: SQLite (via sql.js)
 - **Desenvolvimento**: ts-node (execução direta de TypeScript)
 
-## ✨ Características
+## Características
 
-- ✅ **Type Safety**: TypeScript previne erros em tempo de compilação
-- ✅ **Validação Robusta**: Zod valida entrada de dados com mensagens estruturadas
-- ✅ **CRUD Completo**: GET, GET por ID, POST, PATCH
-- ✅ **Transições de Status**: Apenas status válidos são permitidos
-- ✅ **Respostas Padronizadas**: Status HTTP apropriados (201, 400, 404)
-- ✅ **Documentação em Código**: Tipos e interfaces servem como documentação
+- **Type Safety:** TypeScript previne erros em tempo de compilação
+- **Validação Robusta:** Zod valida entrada de dados com mensagens estruturadas
+- **Persistência:** SQLite com sql.js, dados salvos em arquivo tickets.db
+- **CRUD Completo:** GET, GET por ID, POST, PATCH
+- **Transições de Status:** Apenas status válidos são permitidos (open, in progress, closed, archived)
+- **Padrão Repository:** Separação clara entre lógica de negócio e acesso a dados
+- **Respostas Padronizadas:** Status HTTP apropriados (200, 201, 400, 404)
+- **Documentação em Código:** Tipos e interfaces servem como documentação
 
-## 📋 Endpoints
+## Endpoints
 
 | Método | Endpoint | Descrição | Status |
 |--------|----------|-----------|--------|
@@ -30,7 +33,7 @@ Inspirado em plataformas como ServiceNow, esta API REST oferece operações CRUD
 | POST | `/tickets` | Cria novo ticket | 201 / 400 |
 | PATCH | `/tickets/:id` | Atualiza status do ticket | 200 / 400 / 404 |
 
-## 🏃 Como Executar
+## Como Executar
 
 ### Instalação
 
@@ -61,46 +64,77 @@ npm run build
 npm start
 ```
 
+## Roadmap
 
-## 🔄 Roadmap
-### Fase 1: TypeScript e Validação ✅
+### Fase 1: TypeScript e Validação (Completa)
+
 - [x] Migração de JavaScript para TypeScript
-- [x] Implementação de tipos seguros (interfaces e types)
+- [x] Implementação de tipos seguros
 - [x] Validação robusta com Zod
 - [x] 4 rotas CRUD completas
 
-### Fase 2: Persistência e Segurança
-- [ ] SQLite (persistência em arquivo)
-- [ ] Autenticação JWT
-- [ ] Middleware de rate limiting
+### Fase 2: Persistência (Completa)
+
+- [x] SQLite com sql.js
+- [x] Padrão Repository para separação de responsabilidades
+- [x] Dados persistem após reinício do servidor
+- [x] Schema com AUTOINCREMENT para IDs
 
 ### Fase 3: Fluxo de Negócio
-- [ ] Máquina de estados (controlar transições de status)
+
+- [ ] DELETE ticket (completar CRUD)
+- [ ] Máquina de estados (validar transições de status)
 - [ ] Timestamps (createdAt, updatedAt)
 - [ ] Auditoria (registrar quem fez cada ação)
 
-### Fase 4: Escalabilidade
+### Fase 4: Qualidade e Escalabilidade
+
+- [ ] Testes automatizados (Jest)
 - [ ] Paginação em GET /tickets
 - [ ] Filtros (por status, usuário, etc)
-- [ ] Soft delete
+- [ ] Documentação Swagger/OpenAPI
 - [ ] Logs estruturados
+- [ ] Rate limiting
 
-## 📚 Por que TypeScript?
+### Fase 5: Integração
 
-- **Detecção de erros**: Encontra bugs antes de rodar
-- **Documentação automática**: Tipos servem como documentação
-- **Refatoração segura**: Alterar código com confiança
-- **Autocompletar**: IDE oferece sugestões precisas
-- **Escalabilidade**: Código mais mantível em projetos grandes
+- [ ] Autenticação JWT
+- [ ] Integração com ServiceNow
+- [ ] Webhooks para eventos
 
-## 🧪 Testando
+## Por que TypeScript?
+
+- Detecção de erros: Encontra bugs antes de rodar
+- Documentação automática: Tipos servem como documentação
+- Refatoração segura: Alterar código com confiança
+- Autocompletar: IDE oferece sugestões precisas
+- Escalabilidade: Código mais mantível em projetos grandes
+
+## Testando
 
 Use Thunder Client (extensão do VSCode) ou Postman para testar os endpoints.
 
-## 📄 Licença
+Exemplo com curl:
+
+```bash
+# Listar todos
+curl http://localhost:3000/tickets
+
+# Criar ticket
+curl -X POST http://localhost:3000/tickets \
+  -H "Content-Type: application/json" \
+  -d '{"userID": 1, "title": "Bug no login", "status": "open"}'
+
+# Atualizar status
+curl -X PATCH http://localhost:3000/tickets/1 \
+  -H "Content-Type: application/json" \
+  -d '{"status": "in progress"}'
+```
+
+## Desenvolvimento
+
+Construído como portfolio de transição para desenvolvimento. Foco em code quality, boas práticas e aprendizado de conceitos core de backend.
+
+## Licença
 
 ISC
-
----
-
-**Desenvolvido com ❤️ em TypeScript**
