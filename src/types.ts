@@ -11,7 +11,7 @@ export interface Ticket {
 }
 
 // Interface que valida se os campos estão preenchidos corretamente.
-export interface CreateTocletPayload {
+export interface CreateTicketPayload {
     userID: number;
     title: string;
     status: ticketStatus;
@@ -21,4 +21,3 @@ export interface CreateTocletPayload {
 export interface UpdateTicketPayload {
     status: ticketStatus;
 }
-
